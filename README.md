@@ -6,11 +6,14 @@
 // when the count greater than 10; In this status, the result isn't
 // stable
 const stableSort = ([...arr], [...keys]) => {
+  if (keys.length <= 0) {
+    return arr;
+  }
   const key = keys.shift();
   const result = arr
       .sort((a, b) => ((a[key] - b[key]) || (a.$index - b.$index)))
       .map((item, $index) => ({ ...item, $index }));
-  return keys.length <=0 ? result : stableSort(result, keys);
+  return stableSort(result, keys);
 }
 
 // example
@@ -36,13 +39,9 @@ stableSort(input, ['weight', 'height'];
 // tips:
 //微信中web开发，input被弹出键盘挡住最简单解决方案
 //在键盘弹出之前，将页面滚动到底部，就可以解决。
-
 const value = document.body.scrollHeight - document.documentElement.clientHeight;
 const setTop = (value) => {
-  // pc
-  document.documentElement.scrollTop = value;
-  // mb wx
-  document.body.scrollTop = value;
+  document.documentElement.scrollTop = document.body.scrollTop = value;
 }
 ```
 
