@@ -1,5 +1,51 @@
 # js-snippets
 
+## stableSort
+```js
+// chrome sort function which built in use different algorithm 
+// when the count greater than 10; In this status, the result isn't
+// stable
+const stableSort = ([...arr], [...keys]) => {
+  const key = keys.shift();
+  const result = arr
+      .sort((a, b) => ((a[key] - b[key]) || (a.$index - b.$index)))
+      .map((item, $index) => ({ ...item, $index }));
+  return keys.length <=0 ? result : stableSort(result, keys);
+}
+
+// example
+var input = [ 
+    { height: 100, weight: 80 },
+    { height: 90, weight: 90 },
+    { height: 70, weight: 95 },
+    { height: 100, weight: 100 },
+    { height: 80, weight: 110 },
+    { height: 110, weight: 115 },
+    { height: 100, weight: 120 },
+    { height: 70, weight: 125 },
+    { height: 70, weight: 130 },
+    { height: 100, weight: 135 },
+    { height: 75, weight: 140 },
+    { height: 70, weight: 140 } 
+];
+stableSort(input, ['weight', 'height'];
+```
+
+## scroll bottom
+```js
+// tips:
+//微信中web开发，input被弹出键盘挡住最简单解决方案
+//在键盘弹出之前，将页面滚动到底部，就可以解决。
+
+const value = document.body.scrollHeight - document.documentElement.clientHeight;
+const setTop = (value) => {
+  // pc
+  document.documentElement.scrollTop = value;
+  // mb wx
+  document.body.scrollTop = value;
+}
+```
+
 ## return top
 ```js
 // void (DOMELEMENT, [int])
